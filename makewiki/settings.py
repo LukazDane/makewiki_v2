@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts.apps.AccountsConfig',  # new
 
-    'wiki'
+
+    'wiki',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +136,8 @@ WIKI_PAGE_TITLE_MAX_LENGTH = 600
 # Where to redirect during authentication
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+DEFAULT_LOGOUT_URL = '/'
+
 
 # Required for Heroku
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -143,6 +147,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Need to override settings? Create a local_settings.py file
 # in this directory, and add settings there.
 try:
-    from makewiki.local_settings import *
+    from makewiki.settings import *
 except ImportError:
     pass
