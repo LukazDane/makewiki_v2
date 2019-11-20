@@ -1,8 +1,10 @@
+from wiki.models import Page
 from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-
-from wiki.models import Page
+from django.views.generic.edit import UpdateView, CreateView
+from .forms import PageForm
 
 
 class PageListView(ListView):
@@ -13,8 +15,9 @@ class PageListView(ListView):
         """ GET a list of Pages. """
         pages = self.get_queryset().all()
         return render(request, 'list.html', {
-          'pages': pages
+            'pages': pages
         })
+
 
 class PageDetailView(DetailView):
     """ Renders a specific page based on it's slug."""
@@ -24,5 +27,15 @@ class PageDetailView(DetailView):
         """ Returns a specific wiki page by slug. """
         page = self.get_queryset().get(slug__iexact=slug)
         return render(request, 'page.html', {
-          'page': page
+            'page': page
         })
+
+
+class PageCreateView(CreateView):
+    model = Page
+    fields = ['title', 'content']
+
+    def new_page(self, request):
+        form = PageForm(data=request.POST, instance=Page)
+        form.instance.created_by = self.request.user
+        return render(request, 'create_page.html', {'form': form})
