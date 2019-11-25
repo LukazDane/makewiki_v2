@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 {% if article %}
 <h1>Edit article {{ article }}</h1>
 {% else %}
@@ -12,3 +14,4 @@
     </table>
     <input type="submit" name="submit" value="Submit">
 </form>
+{% endblock %}
